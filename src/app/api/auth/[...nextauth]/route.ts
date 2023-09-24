@@ -1,10 +1,7 @@
-
-// /app/api/auth/[...nextauth]/route.ts 경로
-
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
-const authOptions = {
+const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   providers: [
     GoogleProvider({
@@ -13,6 +10,15 @@ const authOptions = {
     }),
     // ...add more providers here
   ],
+  callbacks: {
+    async session({ session }) {
+      console.log(session);
+      return session;
+    },
+  },
+  pages: {
+    signIn: '/auth/signin',
+  }
 };
 
 const handler = NextAuth(authOptions);
