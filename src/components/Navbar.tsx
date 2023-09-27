@@ -37,7 +37,7 @@ export default function Navbar() {
     return (
         <div className='flex justify-between items-center px-6'>
             <Link href='/'>
-                <h1 className='text-3xl font-bold'>Instantgram</h1>
+                <h1 className='text-3xl font-bold'>Instagram</h1>
             </Link>
             <nav>
                 <ul className='flex gap-4 items-center p-4'>
@@ -51,7 +51,7 @@ export default function Navbar() {
                     {user && (
                         <li>
                             <Link href={`/user/${user.username}`}>
-                                <Avatar image={user.image} />
+                                <Avatar image={user.image} size='small' highlight />
                             </Link>
                         </li>
                     )}
