@@ -6,7 +6,7 @@ type Props = {
 };
 export default function SideBar({ user: { name, username, image } }: Props) {
     return (
-        <>
+        <div className='pl-8'>
             <div className='flex items-center'>
                 {image && <Avatar image={image} />}
                 <div className='ml-4'>
@@ -21,6 +21,6 @@ export default function SideBar({ user: { name, username, image } }: Props) {
             <p className='font-bold text-sm mt-8 text-neutral-500'>
                 @Copyright INSTANTGRAM from KoneJ
             </p>
-        </>
+        </div>
     );
 }
