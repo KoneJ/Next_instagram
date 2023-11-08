@@ -1,12 +1,12 @@
-import { User } from '@/model/user';
+import { AuthUser } from '@/model/user';
 import Avatar from './Avatar';
 
 type Props = {
-    user: User;
+    user: AuthUser;
 };
 export default function SideBar({ user: { name, username, image } }: Props) {
     return (
-        <div className='pl-8'>
+        <>
             <div className='flex items-center'>
                 {image && <Avatar image={image} />}
                 <div className='ml-4'>
@@ -19,8 +19,8 @@ export default function SideBar({ user: { name, username, image } }: Props) {
                 Language
             </p>
             <p className='font-bold text-sm mt-8 text-neutral-500'>
-                @Copyright INSTANTGRAM from KoneJ
+                @Copyright INSTANTGRAM from METAL
             </p>
-        </div>
+        </>
     );
 }
