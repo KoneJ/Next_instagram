@@ -1,4 +1,4 @@
-import { ProfileUser } from '@/model/user';
+import { SearchUser } from '@/model/user';
 import { client } from './sanity';
 
 type OAuthUser = {
@@ -35,7 +35,6 @@ export async function getUserByUsername(username: string) {
   );
 }
 
-
 export async function searchUsers(keyword?: string) {
   const query = keyword
     ? `&& (name match "${keyword}") || (username match "${keyword}")`
@@ -50,7 +49,7 @@ export async function searchUsers(keyword?: string) {
     `
     )
     .then((users) =>
-      users.map((user: ProfileUser) => ({
+      users.map((user: SearchUser) => ({
         ...user,
         following: user.following ?? 0,
         followers: user.followers ?? 0,
@@ -76,4 +75,24 @@ export async function getUserForProfile(username: string) {
       followers: user.followers ?? 0,
       posts: user.posts ?? 0,
     }));
+}
+
+export async function addBookmark(userId: string, postId: string) {
+  return client
+    .patch(userId) //
+    .setIfMissing({ bookmarks: [] })
+    .append('bookmarks', [
+      {
+        _ref: postId,
+        _type: 'reference',
+      },
+    ])
+    .commit({ autoGenerateArrayKeys: true });
+}
+
+export async function removeBookmark(userId: string, postId: string) {
+  return client
+    .patch(userId)
+    .unset([`bookmarks[_ref=="${postId}"]`])
+    .commit();
 }
