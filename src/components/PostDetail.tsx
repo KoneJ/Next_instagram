@@ -1,25 +1,18 @@
-import useMe from '@/hooks/me';
 import useFullPost from '@/hooks/post';
-import { FullPost, SimplePost } from '@/model/post';
+import { SimplePost } from '@/model/post';
 import Image from 'next/image';
-import userSWR from 'swr';
 import ActionBar from './ActionBar';
 import Avatar from './Avatar';
-import CommentForm from './CommentForm';
 import PostUserAvatar from './PostUserAvatar';
 
 type Props = {
   post: SimplePost;
 };
 export default function PostDetail({ post }: Props) {
-  const { id, userImage, username, image, createdAt, likes } = post;
+  const { id, userImage, username, image } = post;
   const { post: data, postComment } = useFullPost(id);
-  const { user } = useMe();
   const comments = data?.comments;
-  const handlePostComment = (comment: string) => {
-    user &&
-      postComment({ comment, username: user.username, image: user.image });
-  };
+
   return (
     <section className='flex w-full h-full'>
       <div className='relative basis-3/5'>
@@ -52,8 +45,7 @@ export default function PostDetail({ post }: Props) {
               )
             )}
         </ul>
-        <ActionBar post={post} />
-        <CommentForm onPostComment={handlePostComment} />
+        <ActionBar post={post} onComment={postComment} />
       </div>
     </section>
   );
